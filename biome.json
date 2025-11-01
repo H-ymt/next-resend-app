@@ -24,7 +24,10 @@
 			"!**/.alchemy",
 			"!**/.svelte-kit",
 			"!**/wrangler.jsonc",
-			"!**/.source"
+			"!**/.source",
+			"!**/worker-configuration.d.ts",
+			"!**/drizzle.config.ts",
+			"!**/index.css"
 		]
 	},
 	"formatter": {
