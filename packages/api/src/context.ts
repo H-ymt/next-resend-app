@@ -4,7 +4,7 @@ import type { ContactFormInput } from "./schemas/contact";
 export type CreateContextOptions = {
 	context: HonoContext;
 	env?: {
-		SENDGRID_API_KEY?: string;
+		RESEND_API_KEY?: string;
 		FROM_EMAIL?: string;
 		ADMIN_EMAIL?: string;
 		SITE_NAME?: string;
@@ -12,7 +12,6 @@ export type CreateContextOptions = {
 	};
 	helpers?: {
 		verifyTurnstileToken: (token: string, secret: string) => Promise<boolean>;
-		initializeSendGrid: (apiKey: string) => void;
 		sendAdminNotification: (
 			input: ContactFormInput,
 			config: {
@@ -20,6 +19,7 @@ export type CreateContextOptions = {
 				adminEmail: string;
 				siteName: string;
 			},
+			apiKey: string,
 		) => Promise<void>;
 		sendUserConfirmation: (
 			input: ContactFormInput,
@@ -27,6 +27,7 @@ export type CreateContextOptions = {
 				fromEmail: string;
 				siteName: string;
 			},
+			apiKey: string,
 		) => Promise<void>;
 	};
 };

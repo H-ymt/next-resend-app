@@ -1,6 +1,6 @@
 "use client";
 
-import { ContactFormSchema } from "@next-sendgrid-app/api/schemas/contact";
+import { ContactFormSchema } from "@next-resend-app/api/schemas/contact";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { toast } from "sonner";

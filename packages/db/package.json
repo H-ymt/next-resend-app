@@ -1,5 +1,5 @@
 {
-	"name": "@next-sendgrid-app/db",
+	"name": "@next-resend-app/db",
 	"type": "module",
 	"exports": {
 		".": {

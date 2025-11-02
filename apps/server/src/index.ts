@@ -1,15 +1,11 @@
 import { env } from "cloudflare:workers";
 import { trpcServer } from "@hono/trpc-server";
-import { createContext } from "@next-sendgrid-app/api/context";
-import { appRouter } from "@next-sendgrid-app/api/routers/index";
+import { createContext } from "@next-resend-app/api/context";
+import { appRouter } from "@next-resend-app/api/routers/index";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import {
-	initializeSendGrid,
-	sendAdminNotification,
-	sendUserConfirmation,
-} from "./lib/sendgrid";
+import { sendAdminNotification, sendUserConfirmation } from "./lib/resend";
 import { verifyTurnstileToken } from "./lib/turnstile";
 
 const app = new Hono();
@@ -31,7 +27,7 @@ app.use(
 			return createContext({
 				context,
 				env: {
-					SENDGRID_API_KEY: env.SENDGRID_API_KEY,
+					RESEND_API_KEY: env.RESEND_API_KEY,
 					FROM_EMAIL: env.FROM_EMAIL,
 					ADMIN_EMAIL: env.ADMIN_EMAIL,
 					SITE_NAME: env.SITE_NAME,
@@ -39,7 +35,6 @@ app.use(
 				},
 				helpers: {
 					verifyTurnstileToken,
-					initializeSendGrid,
 					sendAdminNotification,
 					sendUserConfirmation,
 				},

@@ -13,8 +13,8 @@ declare namespace Cloudflare {
 		BETTER_AUTH_SECRET: string;
 		BETTER_AUTH_URL: string;
 		CORS_ORIGIN: string;
-		// SendGrid & Contact Form
-		SENDGRID_API_KEY: string;
+		// Resend & Contact Form
+		RESEND_API_KEY: string;
 		FROM_EMAIL: string;
 		ADMIN_EMAIL: string;
 		SITE_NAME: string;

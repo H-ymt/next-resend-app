@@ -1,5 +1,5 @@
 {
-	"name": "@next-sendgrid-app/api",
+	"name": "@next-resend-app/api",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -26,6 +26,6 @@
 		"hono": "catalog:",
 		"dotenv": "catalog:",
 		"zod": "catalog:",
-		"@next-sendgrid-app/db": "workspace:*"
+		"@next-resend-app/db": "workspace:*"
 	}
 }

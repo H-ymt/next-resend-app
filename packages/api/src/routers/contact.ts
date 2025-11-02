@@ -16,7 +16,7 @@ export const contactRouter = router({
 
 			// 環境変数の検証
 			if (
-				!env.SENDGRID_API_KEY ||
+				!env.RESEND_API_KEY ||
 				!env.FROM_EMAIL ||
 				!env.ADMIN_EMAIL ||
 				!env.SITE_NAME ||
@@ -31,7 +31,6 @@ export const contactRouter = router({
 			// ヘルパー関数の検証
 			if (
 				!helpers.verifyTurnstileToken ||
-				!helpers.initializeSendGrid ||
 				!helpers.sendAdminNotification ||
 				!helpers.sendUserConfirmation
 			) {
@@ -55,21 +54,26 @@ export const contactRouter = router({
 					});
 				}
 
-				// 2. SendGrid 初期化
-				helpers.initializeSendGrid(env.SENDGRID_API_KEY);
+				// 2. 管理者通知メール送信
+				await helpers.sendAdminNotification(
+					input,
+					{
+						fromEmail: env.FROM_EMAIL,
+						adminEmail: env.ADMIN_EMAIL,
+						siteName: env.SITE_NAME,
+					},
+					env.RESEND_API_KEY,
+				);
 
-				// 3. 管理者通知メール送信
-				await helpers.sendAdminNotification(input, {
-					fromEmail: env.FROM_EMAIL,
-					adminEmail: env.ADMIN_EMAIL,
-					siteName: env.SITE_NAME,
-				});
-
-				// 4. ユーザー確認メール送信
-				await helpers.sendUserConfirmation(input, {
-					fromEmail: env.FROM_EMAIL,
-					siteName: env.SITE_NAME,
-				});
+				// 3. ユーザー確認メール送信
+				await helpers.sendUserConfirmation(
+					input,
+					{
+						fromEmail: env.FROM_EMAIL,
+						siteName: env.SITE_NAME,
+					},
+					env.RESEND_API_KEY,
+				);
 
 				return {
 					success: true,

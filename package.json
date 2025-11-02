@@ -1,5 +1,5 @@
 {
-	"name": "next-sendgrid-app",
+	"name": "next-resend-app",
 	"private": true,
 	"type": "module",
 	"workspaces": [
@@ -15,10 +15,10 @@
 		"dev:native": "turbo -F native dev",
 		"dev:web": "turbo -F web dev",
 		"dev:server": "turbo -F server dev",
-		"db:push": "turbo -F @next-sendgrid-app/db db:push",
-		"db:studio": "turbo -F @next-sendgrid-app/db db:studio",
-		"db:generate": "turbo -F @next-sendgrid-app/db db:generate",
-		"db:migrate": "turbo -F @next-sendgrid-app/db db:migrate"
+		"db:push": "turbo -F @next-resend-app/db db:push",
+		"db:studio": "turbo -F @next-resend-app/db db:studio",
+		"db:generate": "turbo -F @next-resend-app/db db:generate",
+		"db:migrate": "turbo -F @next-resend-app/db db:migrate"
 	},
 	"dependencies": {
 		"dotenv": "^17.2.2",

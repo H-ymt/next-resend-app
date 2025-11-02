@@ -1,17 +1,11 @@
-import type { ContactFormInput } from "@next-sendgrid-app/api/schemas/contact";
-import sendgrid from "@sendgrid/mail";
-
-/**
- * SendGrid API を初期化
- */
-export function initializeSendGrid(apiKey: string): void {
-	sendgrid.setApiKey(apiKey);
-}
+import type { ContactFormInput } from "@next-resend-app/api/schemas/contact";
+import { Resend } from "resend";
 
 /**
  * 管理者宛に通知メールを送信
  * @param input - お問い合わせフォームの入力データ
  * @param config - 送信設定
+ * @param apiKey - Resend API キー
  */
 export async function sendAdminNotification(
 	input: ContactFormInput,
@@ -20,13 +14,16 @@ export async function sendAdminNotification(
 		adminEmail: string;
 		siteName: string;
 	},
+	apiKey: string,
 ): Promise<void> {
 	const { name, email, message } = input;
 	const { fromEmail, adminEmail, siteName } = config;
 
+	const resend = new Resend(apiKey);
+
 	const mailContent = {
-		to: adminEmail,
 		from: fromEmail,
+		to: adminEmail,
 		subject: `【${siteName}】お問い合わせがありました`,
 		text: `
 新しいお問い合わせがありました。
@@ -69,7 +66,7 @@ ${message}
 	};
 
 	try {
-		await sendgrid.send(mailContent);
+		await resend.emails.send(mailContent);
 	} catch (error) {
 		console.error("Failed to send admin notification:", error);
 		throw new Error("管理者への通知メール送信に失敗しました");
@@ -80,6 +77,7 @@ ${message}
  * ユーザー宛に自動返信メールを送信
  * @param input - お問い合わせフォームの入力データ
  * @param config - 送信設定
+ * @param apiKey - Resend API キー
  */
 export async function sendUserConfirmation(
 	input: ContactFormInput,
@@ -87,13 +85,16 @@ export async function sendUserConfirmation(
 		fromEmail: string;
 		siteName: string;
 	},
+	apiKey: string,
 ): Promise<void> {
 	const { name, email } = input;
 	const { fromEmail, siteName } = config;
 
+	const resend = new Resend(apiKey);
+
 	const mailContent = {
-		to: email,
 		from: fromEmail,
+		to: email,
 		subject: `【${siteName}】お問い合わせを受け付けました`,
 		text: `
 ${name} 様
@@ -128,7 +129,7 @@ ${siteName}
 	};
 
 	try {
-		await sendgrid.send(mailContent);
+		await resend.emails.send(mailContent);
 	} catch (error) {
 		console.error("Failed to send user confirmation:", error);
 		throw new Error("確認メール送信に失敗しました");

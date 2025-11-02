@@ -5,5 +5,5 @@ export default defineConfig({
 	format: "esm",
 	outDir: "./dist",
 	clean: true,
-	noExternal: [/@next-sendgrid-app\/.*/],
+	noExternal: [/@next-resend-app\/.*/],
 });
